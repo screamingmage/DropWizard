@@ -1,0 +1,21 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+version: '1.0'
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+}
+
+dependencies {
+	compile group: 'com.yammer.dropwizard', name: 'dropwizard-core', version: '0.6.2'
+}
+
+apply plugin: 'application'
+
+mainClassName = 'com.example.dropwizard.service.FirstDropWizardService'
+
+run {
+	args 'server', 'first-drop-wizard.yml'
+}
