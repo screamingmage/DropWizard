@@ -30,7 +30,7 @@ public class TodoResource {
     }
 
     @GET
-    @Path("/list")
+    @Path("/items")
     @Produces(MediaType.TEXT_HTML)
     public View list() {
         return new FreeMarkerView("todo", new Object());
