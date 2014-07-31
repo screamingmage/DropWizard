@@ -25,8 +25,6 @@ $(function() {
         })
         .done(function(date) {
             console.log("Saved item");
-
-            ${".item-description")
         });
 
     });

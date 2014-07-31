@@ -9,6 +9,8 @@ import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -41,5 +43,17 @@ public class TodoResource {
     public Response save(@Valid TodoItem todoItem) {
         todoItemDao.save(todoItem);
         return Response.noContent().build();
+    }
+
+    @GET
+    @Path("/list/items")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<TodoItem> listItems() {
+        final Iterable<TodoItem> all = todoItemDao.all();
+        List<TodoItem> items = new ArrayList<TodoItem>();
+        for(TodoItem item : all) {
+            items.add(item);
+        }
+        return items;
     }
 }
