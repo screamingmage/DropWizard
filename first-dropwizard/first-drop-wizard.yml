@@ -1,2 +1,7 @@
 template: Hello, %s!
 defaultName: Stranger
+
+mongoHost: ds053439.mongolab.com
+mongoPort: 53439
+mongoUsername: msm
+mongoPassword: password

@@ -1,13 +1,12 @@
 package com.example.dropwizard.health;
 
-import com.yammer.metrics.core.HealthCheck;
+import com.codahale.metrics.health.HealthCheck;
 
 public class FirstDropWizardHealthCheck extends HealthCheck {
 
 	private final String template;
 
 	public FirstDropWizardHealthCheck(String template) {
-		super("template");
 		this.template = template;
 	}
 

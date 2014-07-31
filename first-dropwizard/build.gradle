@@ -1,7 +1,25 @@
 apply plugin: 'java'
-apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'fatjar'
+apply plugin: 'application'
 
-version: '1.0'
+mainClassName = 'com.example.dropwizard.service.FirstDropWizardService'
+
+version = '1.0'
+
+// Add Gradle FatJar Plugin, see https://github.com/musketyr/gradle-fatjar-plugin
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath (
+                ['eu.appsatori:gradle-fatjar-plugin:0.1.3'],
+                ['com.github.dzhaughnroth:jasmine-gradle-plugin:0.4']
+        )
+    }
+}
 
 repositories {
 	mavenLocal()
@@ -9,13 +27,27 @@ repositories {
 }
 
 dependencies {
-	compile group: 'com.yammer.dropwizard', name: 'dropwizard-core', version: '0.6.2'
+    compile 'io.dropwizard:dropwizard-assets:0.7.1'
+	compile 'io.dropwizard:dropwizard-core:0.7.1'
+    compile 'io.dropwizard:dropwizard-views:0.7.1'
+    compile 'io.dropwizard:dropwizard-views-freemarker:0.7.1'
+    compile 'org.jongo:jongo:1.1'
+    compile 'org.mongodb:mongo-java-driver:2.12.3'
 }
-
-apply plugin: 'application'
-
-mainClassName = 'com.example.dropwizard.service.FirstDropWizardService'
 
 run {
 	args 'server', 'first-drop-wizard.yml'
+}
+
+// Configure the fatJar task
+fatJar {
+    classifier 'fat'
+
+    // We need to add the main class to the manifest, otherwise the JAR won't start.
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+
+    // We have to exclude signature files from the fat JAR, otherwise we'll get invalid signature file digest errors.
+    exclude 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.SF'
 }
